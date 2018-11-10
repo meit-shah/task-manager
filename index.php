@@ -7,27 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Task Tracker App</title>
-    <style>
-        #navbar{
-            width:100%;
-        }
-
-        .deleteButton, .completeButton{
-            color: white;
-            padding:10px 15px 10px 15px;
-            border-radius: 5px;
-            text-decoration:none;
-            background-color:tomato;
-        }
-
-        .completeButton{
-            background-color: green;
-        }
-
-        #taskList li{
-            padding-top:5px; 
-        }
-    </style>    
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -40,19 +20,6 @@
     <header><h1><center>Task Tracker</center></h1></header>
     <hr>
     <main>
-        <!-- <section id="navbar">
-            <div class="container">
-                <div class="row text-center">
-                  <div class="col-lg-6 col-xs-6">
-                    <b>Pending Tasks</b> :               
-                 </div>
-                <div class="col-lg-6 col-xs-6">
-                   <b> Total Goals Achieved </b>: 
-                </div>
-             </div> 
-          </div>
-        </section> -->
-        <!-- <hr> -->
         <section id="taskInput" style="margin:20px 0px 20px 0px; padding:20px;">
             <form action="#" name="taskInputForm" class="form-inline" method="POST">
                 <div class="container">

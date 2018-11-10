@@ -9,6 +9,16 @@
 
  // Task Functions 
 
+  //retrieve the tasks from db and display the total count of tasks in the list
+
+  public function getArray($table_name){
+    $tasksArraySql = "SELECT * from $table_name"; 
+    $prepareSql = $this-> conn -> prepare($tasksArraySql);
+    $prepareSql -> execute(); 
+    $tasksArray = $prepareSql -> fetchAll(); // fetch all the data of the db in array
+    return  $tasksArray; 
+  }
+
   public function insertTask($table_name, $task_column, $deadline_column){ // insert new task into db
     if(isset($_POST['submit'])){
       $taskInput = $_POST['taskInput'];
@@ -42,20 +52,10 @@
     $prepareSql-> execute();
   }
 
-  //retrieve the tasks from db and display the total count of tasks in the list
-
-  public function getTasksArray(){
-    $tasksArraySql = "SELECT * from tasklist"; 
-    $prepareSql = $this-> conn -> prepare($tasksArraySql);
-    $prepareSql -> execute(); 
-    $tasksArray = $prepareSql -> fetchAll(); // fetch all the data of the db in array
-    return  $tasksArray; 
-  }
-
   // display the tasks to users
 
   public function displayTaskList($task_column, $deadline, $id){ // fetch and display all the tasks form db
-    $tasksArray = $this-> getTasksArray(); // fetch all the tasks from db in and array and store in php variable
+    $tasksArray = $this-> getArray('tasklist'); // fetch all the tasks from db in and array and store in php variable
     echo "<h4 class='text-center' style='background-color:#aaa;color:white;padding:10px;'> Total Pending Tasks = ".sizeof($tasksArray)."</h4>"; // display the count of pending tasks
     foreach($tasksArray as $task){
       $displayAllTasks = 
@@ -85,14 +85,6 @@
 
   // Goals List Functions , goals are nothing but the tasks that are completed
 
-  public function getGoalsArray(){ // to the get the count of goals in the database
-    $goalsArraySql = "SELECT * from goals";
-    $prepareSql = $this-> conn -> prepare($goalsArraySql);
-    $prepareSql->execute();
-    $goalsArray = $prepareSql -> fetchAll();
-    return $goalsArray;
-  }
-
   public function insertIntoGoals($value){ // insert into database  a new goals
     $insertGoalSql = "INSERT INTO goals(`list`) values('$value')";
     $prepareSql = $this-> conn -> prepare($insertGoalSql);
@@ -100,11 +92,10 @@
   }
 
   public function displayGoalsList(){ // display all goals from db   
+    $goalsArray = $this-> getArray('goals');
     if(isset($_GET['completed'])){ // on clicking the task completed button the task will be deleted and added to goals completed list
-      $completedTask = $_GET['completed'];
-      $this-> insertIntoGoals($completedTask); // add the deleted task to the goals list
+      $this-> insertIntoGoals($_GET['completed']); // add the deleted task to the goals list
     }
-    $goalsArray = $this-> getGoalsArray();
     for($table_row=0;$table_row<sizeof($goalsArray);$table_row++){
      echo "<li>".$goalsArray[$table_row]['list']."</li>"; // display all the tasks in the list
     }
